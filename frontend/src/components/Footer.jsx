@@ -3,9 +3,9 @@ import {FaDribbbleSquare, FaFacebookSquare, FaGithubSquare, FaInstagramSquare, F
 
 const Footer = () => {
   return (
-    <div className='max-w-[1240px] mx-auto py-16 px-4 grid lg:grid-cols-3 gap-8 text-gray-300'>
+    <div className='max-w-[1240px] mx-auto py-16 px-4 grid lg:grid-cols-3 gap-8 text-gray-400 '>
         <div>
-        <h1 className='w-full text-3xl font-bold text-[#00df9a] m-4'>REACT.</h1>
+        <h1 className='w-full text-3xl font-bold text-[#d9b534] m-4'>ABC Restaurant</h1>
         <p className='py-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
         <div className='flex md:w-[75%] my-6 justify-between'>
             <FaFacebookSquare/>
