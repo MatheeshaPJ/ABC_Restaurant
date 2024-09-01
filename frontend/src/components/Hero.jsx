@@ -1,25 +1,35 @@
-import React from 'react'
+import React from 'react';
 import { ReactTyped } from 'react-typed';
+import BG from '../assets/home-bg.jpg';
 
 const Hero = () => {
     return (
-        <div className='text-white'>
-            <div className='max-w-[800px] mt-[-96px] w-full h-screen mx-auto text-center flex flex-col justify-center'>
-                <p className='text-[#00df9a] font-bold p-2'>Hi There!</p>
-                <h1 className='md:text-7xl sm:text-6xl text-4xl font-bold md:py-6'>Drive | Eat | Repeat</h1>
-                <div className='flex justify-center items-center mt-5'>
-                    <p className='md:text-5xl sm:text-4xl text-xl font-bold py-4'>Fast Fresh Food for </p>
-                    <ReactTyped className='md:text-5xl sm:text-4xl text-xl font-bold md-pl-4 pl-2'
-                        strings={['BTB', 'BTC', 'SASS']}
-                        typeSpeed={120}
-                        backSpeed={140}
-                        loop />
+        <div className='w-full h-screen relative'>
+            <div
+                className='absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70'
+                style={{ backgroundImage: `url(${BG})` }}
+            ></div>
+            <div className='absolute top-0 left-0 w-full bg-black opacity-30'></div>
+            <div className='relative max-w-[1240px] mx-auto h-full flex items-center'>
+                <div className='text-white text-center md:text-left'>
+                    <p className='text-[#d9b534] font-bold p-2'>Welcome!</p>
+                    <h1 className='md:text-6xl sm:text-6xl text-4xl font-bold md:py-6'>Authentic Sri Lankan Cuisines </h1>
+                    <div className='flex justify-center md:justify-start items-center mt-5'>
+                        <p className='md:text-5xl sm:text-4xl text-xl font-bold py-4'>Mixed up with Newest Tastes </p>
+                        <div>
+                        <ReactTyped className='md:text-5xl sm:text-4xl text-xl font-bold md:pl-4 pl-2'
+                            strings={['DRIVE', 'ORDER', 'EAT']}
+                            typeSpeed={50}
+                            backSpeed={60}
+                            loop />
+                            </div>
+                    </div>
+                    <p className='md:text-2xl text-xl font-bold text-gray-300'>dsancancjkdsncisj k ihbhbuhsdcscvicgsdvu fu ufw vug uug</p>
+                    <button className='bg-[#d9b534] w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black hover:scale-105 duration-300'>Make your Reservation </button>
                 </div>
-                <p className='md:text-2xl text-xl font-bold text-gray-500'> dsancancjkdsncisj k ihbhbuhsdcscvicgsdvu fu  ufw vug uug</p>
-                <button className='bg-[#00df9a] w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black'>Get Started</button>
             </div>
         </div>
     )
 }
 
-export default Hero
+export default Hero;
