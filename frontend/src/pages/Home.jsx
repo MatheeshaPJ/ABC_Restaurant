@@ -10,7 +10,7 @@ import Offers from "../components/Offers";
 
 const Home = () => {
   return (
-    <div >
+    <div className='bg-black'>
       <Navbar />
       <Hero />
       <Analytics />
