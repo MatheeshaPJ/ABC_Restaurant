@@ -9,7 +9,7 @@ const Gallery = () => {
   return (
     <div className='bg-black'>
       <Navbar/>
-      <div className='w-full bg-[#dab43c] h-[15rem] pt-[40px] rounded-b-3xl'>
+      <div className='w-full bg-[#d19831] h-[15rem] pt-[40px] rounded-b-3xl'>
       <h1 className='text-black font-bold py-[60px]  text-6xl pb-2 text-center'>Gallery</h1>
       <p className='text-white font-semibold text-2xl mt-4 text-center'>Check-out our snaps</p>
 
