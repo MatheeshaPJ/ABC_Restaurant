@@ -5,9 +5,9 @@ const Signin = () => {
   return (
     <div className='bg-gray-200 h-lvh '>
       <div className='flex w-full h-screen justify-center items-center'>
-      <div className='w-full lg:w-2/5 justify-center items-center bg-white px-10 py-20 rounded-3xl border-2 border-gray-200'>
-        <h1 className='text-5xl font-semibold'>Welcome Back</h1>
-        <p className='font-medium text-lg text-gray-500 mt-4'>Welcome back! Please Enter Your Sign-in details.</p>
+      <div className='w-full lg:w-2/5 justify-center items-center bg-white px-10 py-10 rounded-3xl border-2 border-gray-200'>
+        <h1 className='text-5xl font-semibold text-center'>Welcome Back</h1>
+        <p className='font-medium text-lg text-gray-500 mt-4 text-center'>Welcome back! Please Enter Your Sign-in details.</p>
         <div className='mt-8'>
           <div>
             <label className='text-lg font-medium'>Email</label>
@@ -37,9 +37,9 @@ const Signin = () => {
             {/* <button className='flex items-center justify-center gap-2 active:scale-[.98] transition-all hover:scale-[1.01] ease-in-out'>
               Sign-in with Google</button> */}
           </div>
-          <div className='mt-8 flex justify-center items-center'>
-            <p className='font-medium text-base'>Don't have an account?</p>
-            <Link className='text-blue-400 text-base font-medium ml-2'to='/signup' >Sign up</Link>
+          <div className='mt-12 flex justify-center items-center'>
+            <p className='font-medium text-base text-center'>Don't have an account?</p>
+            <Link className='text-blue-400 text-base font-medium ml-2 'to='/signup' >Sign up</Link>
           </div>
         </div>
       </div>
