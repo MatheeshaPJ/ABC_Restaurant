@@ -33,7 +33,7 @@ const Order = () => {
     <div>
       <Navbar />
       
-      <header className='text-center bg-[#d19831] py-8'>
+      <header className='text-center bg-[#d19831] mt-20 py-8'>
         <p className='text-black font-bold text-3xl'>Order Your Favorite Dish</p>
       </header>
       
