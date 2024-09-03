@@ -29,7 +29,7 @@ const Gallery = () => {
     <div>
       <Navbar />
       
-      <header className='w-full bg-[#d19831] h-60 flex flex-col justify-center items-center text-center rounded-b-3xl'>
+      <header className='w-full bg-[#d19831] h-60 flex flex-col justify-center items-center text-center rounded-b-3xl mt-20'>
         <h1 className='text-black font-bold text-6xl'>Gallery</h1>
         <p className='text-white font-semibold text-2xl mt-4'>Discover our vibrant dishes and cozy facilities</p>
       </header>
