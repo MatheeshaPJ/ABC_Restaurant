@@ -10,6 +10,15 @@ import Order from "./pages/Order";
 import Gallery from "./pages/Gallery";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import AdminLogin from "./admin/AdminLogin";
+import AdminDashboard from "./admin/AdminDashboard";
+import ManageReservations from "./admin/ManageReservations";
+import ManageQueries from "./admin/ManageQueries";
+import ManageOrder from "./admin/ManageOrder";
+import ManageUsers from "./admin/ManageUsers";
+import ManageContent from "./admin/ManageContent";
+import ReportGeneration from "./admin/ReportGeneration";
+import SystemSettings from "./admin/SystemSettings";
 
 function App() {
   return (
@@ -26,6 +35,17 @@ function App() {
         <Route exact path="/gallery" element={ <Gallery/>}></Route>
         <Route exact path="/about" element={ <About/>}></Route>
         <Route exact path="/contact" element={ <Contact/>}></Route>
+
+        <Route exact path="/admin" element={ <AdminLogin/>}></Route>
+        <Route exact path="/admin/dashboard" element={ <AdminDashboard/>}></Route>
+        <Route exact path="/admin/reservations" element={ <ManageReservations/>}></Route>
+        <Route exact path="/admin/queries" element={ <ManageQueries/>}></Route>
+        <Route exact path="/admin/orders" element={ <ManageOrder/>}></Route>
+        <Route exact path="/admin/users" element={ <ManageUsers/>}></Route>
+        <Route exact path="/admin/content" element={ <ManageContent/>}></Route>
+        <Route exact path="/admin/reports" element={ <ReportGeneration/>}></Route>
+        <Route exact path="/admin/settings" element={ <SystemSettings/>}></Route>
+       
 
      
       </Routes>
