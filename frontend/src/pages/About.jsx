@@ -24,11 +24,11 @@ const About = () => {
 
           </div>
           <div className='flex flex-col justify-center'>
-            <p className='text-[rgb(148,196,66)] font-bold text-lg uppercase tracking-wide'>
+            <p className='text-[#93c341] font-bold text-lg uppercase tracking-wide'>
               Hungry Foodies💦
             </p>
             <h1 className='text-2xl sm:text-3xl md:text-4xl font-bold py-4'>
-              Welcome to ABC Restaurant – A Taste of Tradition and Innovation
+              Welcome to ABC Restaurant - A Taste of Tradition and Innovation
             </h1>
             <p className='text-gray-700 leading-relaxed'>
               At ABC Restaurant, we believe that every meal should be an experience. Nestled in the heart of Sri Lanka, our restaurant chain has been serving culinary delights for over <strong>25 years </strong> , blending the rich flavors of our heritage with a touch of modern flair. Whether you're craving a hearty Sri Lankan feast or a light and fresh bite, our menu is crafted to cater to every palate.
@@ -43,7 +43,7 @@ const About = () => {
               <strong>Join Us:</strong> Whether you're dining in with family, grabbing a quick bite, or celebrating a special occasion, ABC Restaurant is where cherished memories are made. Come and discover why we are a favorite among locals and travelers alike.
             </p>
             <p className='mt-6 font-semibold text-gray-900'>
-              Welcome to ABC Restaurant – Where tradition meets taste.
+              Welcome to ABC Restaurant - Where tradition meets taste.
             </p>
           </div>
         </div>
