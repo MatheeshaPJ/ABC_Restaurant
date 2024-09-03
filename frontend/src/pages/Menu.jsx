@@ -48,7 +48,7 @@ const Menu = () => {
   return (
     <div className='min-h-screen bg-gradient-to-b from-white via-[#f8f9fa] to-[#d19831]'>
       <Navbar />
-      <header className='text-center bg-[#d19831] py-8'>
+      <header className='text-center bg-[#d19831] py-8 mt-20'>
         <h1 className='text-4xl font-bold text-white'>Our Menu</h1>
         <p className='text-lg text-white mt-2'>Delicious food made with love and the finest ingredients.</p>
       </header>
