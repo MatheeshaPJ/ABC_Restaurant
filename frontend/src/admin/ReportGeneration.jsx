@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AdminNavbar from './AdminNavbar';
 
 
 const ReportGeneration = () => {
@@ -28,9 +29,9 @@ const ReportGeneration = () => {
 
   return (
     <div className='bg-black text-white min-h-screen flex flex-col'>
+<AdminNavbar/>
 
-
-      <div className='flex-grow'>
+      <div className='flex-grow mt-16'>
         <div className='max-w-[1240px] mx-auto py-12'>
           <h1 className='text-4xl font-bold text-center mb-8 text-[#d4af37]'>Report Generation</h1>
 
