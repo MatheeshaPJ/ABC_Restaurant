@@ -21,9 +21,9 @@ public class Reservation {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "table_id", nullable = false)
-    private Table table;
+//    @ManyToOne
+//    @JoinColumn(name = "table_id", nullable = false)
+//    private Table table;
 
     @Column(nullable = false)
     private LocalDateTime reservationDateTime;
@@ -50,13 +50,13 @@ public class Reservation {
         this.user = user;
     }
 
-    public Table getTable() {
-        return table;
-    }
+//    public Table getTable() {
+//        return table;
+//    }
 
-    public void setTable(Table table) {
-        this.table = table;
-    }
+//    public void setTable(Table table) {
+//        this.table = table;
+//    }
 
     public LocalDateTime getReservationDateTime() {
         return reservationDateTime;
