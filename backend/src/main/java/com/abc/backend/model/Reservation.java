@@ -1,69 +1,62 @@
 package com.abc.backend.model;
 
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reservationId;
+    @GeneratedValue
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-//    @ManyToOne
-//    @JoinColumn(name = "table_id", nullable = false)
-//    private Table table;
+//    @Column(nullable = false)
+//    private LocalDateTime reservationDateTime;
 
     @Column(nullable = false)
-    private LocalDateTime reservationDateTime;
+    private String location;
+
+    @Column(nullable = false)
+    private String specialNote;
 
     @Column(nullable = false)
     private String status;
 
-    // Getters and Setters
+    @ManyToOne
+    @JoinColumn(name = "table_id", nullable = false)
+    private ResturantTable table;
+
+    @ManyToOne
+    @JoinColumn( name = "user_id", nullable = false)
+    private User customer;
+
+    //Getters & Setters
 
 
-    public Long getReservationId() {
-        return reservationId;
+    public Long getId() {
+        return id;
     }
 
-    public void setReservationId(Long reservationId) {
-        this.reservationId = reservationId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getLocation() {
+        return location;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-//    public Table getTable() {
-//        return table;
-//    }
-
-//    public void setTable(Table table) {
-//        this.table = table;
-//    }
-
-    public LocalDateTime getReservationDateTime() {
-        return reservationDateTime;
+    public String getSpecialNote() {
+        return specialNote;
     }
 
-    public void setReservationDateTime(LocalDateTime reservationDateTime) {
-        this.reservationDateTime = reservationDateTime;
+    public void setSpecialNote(String specialNote) {
+        this.specialNote = specialNote;
     }
 
     public String getStatus() {
@@ -72,5 +65,21 @@ public class Reservation {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public ResturantTable getTable() {
+        return table;
+    }
+
+    public void setTable(ResturantTable table) {
+        this.table = table;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(User customer) {
+        this.customer = customer;
     }
 }

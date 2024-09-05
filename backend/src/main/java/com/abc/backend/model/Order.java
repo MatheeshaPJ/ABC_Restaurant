@@ -2,28 +2,28 @@ package com.abc.backend.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long orderId;
 
+    //private Timestamp timestamp;
+
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "userId", nullable = false)
+    private User customer;
 
     @Column(nullable = false)
-    private LocalDateTime orderDate;
-
     private String deliveryAddress;
 
     @Column(nullable = false)
     private String status;
 
-    // Getters and Setters
+    //Getters & Setters
 
 
     public Long getOrderId() {
@@ -34,20 +34,12 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public User getUser() {
-        return user;
+    public User getCustomer() {
+        return customer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
+    public void setCustomer(User customer) {
+        this.customer = customer;
     }
 
     public String getDeliveryAddress() {

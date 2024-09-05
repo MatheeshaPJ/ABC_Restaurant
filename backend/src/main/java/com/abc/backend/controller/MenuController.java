@@ -1,21 +1,21 @@
 package com.abc.backend.controller;
 
-import com.abc.backend.model.User;
-import com.abc.backend.repository.UserRepository;
+import com.abc.backend.model.Menu;
+import com.abc.backend.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class MenuController {
 
     @Autowired
-    private UserRepository userRepository;
+    private MenuRepository menuRepository;
 
-    @PostMapping("/user/register")
-    User newUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+    @PostMapping("/menu/create")
+    Menu newMenu(@RequestBody Menu newMenu){
+        return menuRepository.save(newMenu);
     }
 
 }
