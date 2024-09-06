@@ -12,8 +12,11 @@ public class Reservation {
     @GeneratedValue
     private Long id;
 
-//    @Column(nullable = false)
-//    private LocalDateTime reservationDateTime;
+    @Column(columnDefinition = "DATE", nullable = false)
+    private LocalDateTime reservationDate;
+
+    @Column(columnDefinition = "TIME", nullable = false)
+    private LocalDateTime reservationTime;
 
     @Column(nullable = false)
     private String location;
@@ -81,5 +84,21 @@ public class Reservation {
 
     public void setCustomer(User customer) {
         this.customer = customer;
+    }
+
+    public LocalDateTime getReservationDate() {
+        return reservationDate;
+    }
+
+    public void setReservationDate(LocalDateTime reservationDate) {
+        this.reservationDate = reservationDate;
+    }
+
+    public LocalDateTime getReservationTime() {
+        return reservationTime;
+    }
+
+    public void setReservationTime(LocalDateTime reservationTime) {
+        this.reservationTime = reservationTime;
     }
 }

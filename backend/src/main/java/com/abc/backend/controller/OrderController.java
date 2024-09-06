@@ -1,6 +1,6 @@
 package com.abc.backend.controller;
 
-import com.abc.backend.model.Order;
+import com.abc.backend.model.DeliveryOrder;
 import com.abc.backend.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +14,8 @@ public class OrderController {
     private OrderRepository orderRepository;
 
     @PostMapping("/order/create")
-    Order newOrder(@RequestBody Order newOrder){
-        return orderRepository.save(newOrder);
+    DeliveryOrder newOrder(@RequestBody DeliveryOrder newDeliveryOrder){
+        return orderRepository.save(newDeliveryOrder);
     }
 
 }
