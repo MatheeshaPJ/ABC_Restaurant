@@ -16,7 +16,7 @@ public class DeliveryOrder {
 
     @ManyToOne
     @JoinColumn(name = "custId", nullable = false)
-    private User customer;
+    private User customerId;
 
     @Column(nullable = false)
     private String deliveryAddress;
@@ -35,12 +35,12 @@ public class DeliveryOrder {
         this.orderId = orderId;
     }
 
-    public User getCustomer() {
-        return customer;
+    public User getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(User customer) {
-        this.customer = customer;
+    public void setCustomerId(User customer) {
+        this.customerId = customer;
     }
 
     public String getDeliveryAddress() {
