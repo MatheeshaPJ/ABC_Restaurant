@@ -14,7 +14,7 @@ const StaffNavbar = () => {
             <div className='flex justify-between items-center h-20 max-w-[1240px] mx-auto px-4'>
                 <Link className='w-full text-3xl font-bold text-[#d4af37] m-4 cursor-pointer' to="/staff/dashboard">ABC Restaurant Staff</Link>
                 <ul className='hidden md:flex'>
-                    <Link className='p-4 hover:text-[#d4af37] transition duration-300 cursor-pointer' to='/staff/dashboard'>Dashboard</Link>
+                    
                     <Link className='p-4 hover:text-[#d4af37] transition duration-300 cursor-pointer' to='/staff/reservations'>Manage Reservations</Link>
                     <Link className='p-4 hover:text-[#d4af37] transition duration-300 cursor-pointer' to='/staff/queries'>Manage Queries</Link>
                     <Link className='p-4 hover:text-[#d4af37] transition duration-300 cursor-pointer' to='/staff/orders'>Order Management</Link>
