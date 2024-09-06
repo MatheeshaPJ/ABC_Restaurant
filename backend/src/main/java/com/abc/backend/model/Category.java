@@ -16,8 +16,6 @@ public class Category {
     private String categoryName;
 
     //Getters & Setters
-
-
     public Long getCategoryId() {
         return categoryId;
     }
