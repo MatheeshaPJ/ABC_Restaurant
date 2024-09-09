@@ -24,6 +24,8 @@ import AdminEditUser from "./admin/adminManageUsers/AdminEditUser";
 import ManageMenu from "./admin/adminManageMenu/ManageMenu";
 import AdminAddMenu from "./admin/adminManageMenu/AdminAddMenu";
 import AdminEditMenu from "./admin/adminManageMenu/AdminEditMenu";
+import ManageCategory from "./admin/adminManageMenu/ManageCategory";
+import ManageTables from "./admin/adminManageTables/ManageTables"
 import ManageContent from "./admin/ManageContent";
 import ReportGeneration from "./admin/ReportGeneration";
 import SystemSettings from "./admin/SystemSettings";  
@@ -73,6 +75,8 @@ function App() {
         <Route exact path="/admin/menu" element={ <ManageMenu/>}></Route>
         <Route exact path="/admin/addmenu" element={ <AdminAddMenu/>}></Route>
         <Route exact path="/admin/editmenu/:id" element={ <AdminEditMenu/>}></Route>
+        <Route exact path="/admin/category" element={ <ManageCategory/>}></Route>
+        <Route exact path="/admin/tables" element={ <ManageTables/>}></Route>
         <Route exact path="/admin/content" element={ <ManageContent/>}></Route>
         <Route exact path="/admin/reports" element={ <ReportGeneration/>}></Route>
         <Route exact path="/admin/settings" element={ <SystemSettings/>}></Route>
