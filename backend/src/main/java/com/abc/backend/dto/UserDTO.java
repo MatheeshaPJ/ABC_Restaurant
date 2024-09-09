@@ -16,7 +16,7 @@
 //        return id;
 //    }
 //
-//    public void setId(Long id) {
+//    public void setTableId(Long id) {
 //        this.id = id;
 //    }
 //
