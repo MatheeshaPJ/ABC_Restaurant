@@ -14,8 +14,8 @@ public class Menu {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @Column(name = "item", nullable = false)
-    private String item_name;
+    @Column(nullable = false)
+    private String item;
 
     @Column(nullable = false)
     private String description;
@@ -23,14 +23,18 @@ public class Menu {
     @Column(nullable = false)
     private Double price;
 
-    @Column(name = "availability", nullable = false)
-    private Boolean isAvailable;
+    @Column(nullable = false)
+    private String availability;
 
     // Adding the image field as a byte array
     @Lob
+    @Column(name = "image", columnDefinition = "LONGBLOB")
     private byte[] image;
 
+
     // Getters and Setters
+
+
     public Long getMenuId() {
         return menuId;
     }
@@ -47,12 +51,12 @@ public class Menu {
         this.category = category;
     }
 
-    public String getItem_name() {
-        return item_name;
+    public String getItem() {
+        return item;
     }
 
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getDescription() {
@@ -71,12 +75,12 @@ public class Menu {
         this.price = price;
     }
 
-    public Boolean getIsAvailable() {
-        return isAvailable;
+    public String getAvailability() {
+        return availability;
     }
 
-    public void setIsAvailable(Boolean isAvailable) {
-        this.isAvailable = isAvailable;
+    public void setAvailability(String availability) {
+        this.availability = availability;
     }
 
     public byte[] getImage() {
@@ -92,10 +96,10 @@ public class Menu {
         return "Menu{" +
                 "menuId=" + menuId +
                 ", category=" + category +
-                ", item='" + item_name + '\'' +
+                ", item='" + item + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", availability=" + isAvailable +
+                ", availability=" + availability +
                 ", image=" + Arrays.toString(image) +
             '}';
     }

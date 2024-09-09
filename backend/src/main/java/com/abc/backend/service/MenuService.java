@@ -5,7 +5,9 @@ import com.abc.backend.model.Menu;
 import com.abc.backend.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -22,7 +24,7 @@ public class MenuService {
         return menuRepository.findById(id).orElse(null);
     }
 
-    public Menu saveMenu(Menu menu) {
+    public Menu saveMenu(Menu menu){
         return menuRepository.save(menu);
     }
 

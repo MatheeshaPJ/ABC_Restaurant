@@ -43,7 +43,7 @@ const AdminAddMenu = () => {
     formData.append('item', item);
     formData.append('description', description);
     formData.append('price', price);
-    formData.append('category_id', category_id);
+    formData.append('category', category_id);
     formData.append('availability', availability);
     if (image) {
       formData.append('image', image);
@@ -151,8 +151,8 @@ const AdminAddMenu = () => {
                   onChange={onInputChange}
                 >
                   <option value="" disabled>Select availability</option>
-                  <option value="1">Yes</option>
-                  <option value="0">No</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                 </select>
               </div>
 
