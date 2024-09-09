@@ -26,7 +26,6 @@ public class DeliveryOrder {
 
     //Getters & Setters
 
-
     public Long getOrderId() {
         return orderId;
     }
@@ -35,12 +34,20 @@ public class DeliveryOrder {
         this.orderId = orderId;
     }
 
+    public LocalDateTime getOrderTimestamp() {
+        return orderTimestamp;
+    }
+
+    public void setOrderTimestamp(LocalDateTime orderTimestamp) {
+        this.orderTimestamp = orderTimestamp;
+    }
+
     public User getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(User customer) {
-        this.customerId = customer;
+    public void setCustomerId(User customerId) {
+        this.customerId = customerId;
     }
 
     public String getDeliveryAddress() {
@@ -57,13 +64,5 @@ public class DeliveryOrder {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public LocalDateTime getOrderTimestamp() {
-        return orderTimestamp;
-    }
-
-    public void setOrderTimestamp(LocalDateTime orderTimestamp) {
-        this.orderTimestamp = orderTimestamp;
     }
 }
