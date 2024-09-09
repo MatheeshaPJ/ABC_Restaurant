@@ -1,11 +1,9 @@
 package com.abc.backend.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NonNull;
+
 
 @Entity
-@Data
 public class User {
 
     @Id

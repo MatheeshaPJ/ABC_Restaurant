@@ -1,7 +1,7 @@
 package com.abc.backend.model;
 
 public enum USER_ROLE {
-    ROLE_CUSTOMER,
+    ROLE_ADMIN,
     ROLE_STAFF,
-    ROLE_ADMIN
+    ROLE_CUSTOMER
 }
