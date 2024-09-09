@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class OrderItem {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderItemId;
 
     @ManyToOne
@@ -24,6 +24,7 @@ public class OrderItem {
     private Double price;
 
     //Getters & Setters
+
 
     public Long getOrderItemId() {
         return orderItemId;
