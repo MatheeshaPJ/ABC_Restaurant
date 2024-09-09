@@ -9,7 +9,7 @@
 //    // Convert User Entity to UserDTO
 //    public static UserDTO toUserDTO(User user) {
 //        UserDTO dto = new UserDTO();
-//        dto.setId(user.getId());
+//        dto.setTableId(user.getId());
 //        dto.setEmail(user.getEmail());
 //        dto.setFirstName(user.getFirstName());
 //        dto.setLastName(user.getLastName());
