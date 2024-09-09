@@ -1,18 +1,15 @@
 package com.abc.backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-public class ResturantTable {
+public class RestaurantTable {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long tableId;
 
     @Column(nullable = false)
     private String tableNo;
@@ -23,12 +20,12 @@ public class ResturantTable {
     //Getters & Setters
 
 
-    public Long getId() {
-        return id;
+    public Long getTableId() {
+        return tableId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTableId(Long tableId) {
+        this.tableId = tableId;
     }
 
     public String getTableNo() {
