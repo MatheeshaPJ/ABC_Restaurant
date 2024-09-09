@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Query {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long QueryId;
 
     @Column(nullable = false)
@@ -20,6 +20,7 @@ public class Query {
     private User fk_query_user;
 
     //Getters & Setters
+
 
     public Long getQueryId() {
         return QueryId;
