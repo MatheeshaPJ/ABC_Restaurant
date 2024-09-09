@@ -3,14 +3,13 @@ package com.abc.backend.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 public class Reservation {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long reservationId;
 
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDateTime reservationDate;
@@ -29,7 +28,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "table_id", nullable = false)
-    private ResturantTable table;
+    private RestaurantTable table;
 
     @ManyToOne
     @JoinColumn( name = "user_id", nullable = false)
@@ -37,13 +36,28 @@ public class Reservation {
 
     //Getters & Setters
 
-
-    public Long getId() {
-        return id;
+    public Long getReservationId() {
+        return reservationId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setReservationId(Long reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    public LocalDateTime getReservationDate() {
+        return reservationDate;
+    }
+
+    public void setReservationDate(LocalDateTime reservationDate) {
+        this.reservationDate = reservationDate;
+    }
+
+    public LocalDateTime getReservationTime() {
+        return reservationTime;
+    }
+
+    public void setReservationTime(LocalDateTime reservationTime) {
+        this.reservationTime = reservationTime;
     }
 
     public String getLocation() {
@@ -70,11 +84,11 @@ public class Reservation {
         this.status = status;
     }
 
-    public ResturantTable getTable() {
+    public RestaurantTable getTable() {
         return table;
     }
 
-    public void setTable(ResturantTable table) {
+    public void setTable(RestaurantTable table) {
         this.table = table;
     }
 
@@ -84,21 +98,5 @@ public class Reservation {
 
     public void setCustomer(User customer) {
         this.customer = customer;
-    }
-
-    public LocalDateTime getReservationDate() {
-        return reservationDate;
-    }
-
-    public void setReservationDate(LocalDateTime reservationDate) {
-        this.reservationDate = reservationDate;
-    }
-
-    public LocalDateTime getReservationTime() {
-        return reservationTime;
-    }
-
-    public void setReservationTime(LocalDateTime reservationTime) {
-        this.reservationTime = reservationTime;
     }
 }
