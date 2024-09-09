@@ -1,6 +1,7 @@
 import React from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
@@ -10,15 +11,24 @@ import Order from "./pages/Order";
 import Gallery from "./pages/Gallery";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+
+
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 import ManageReservations from "./admin/ManageReservations";
 import ManageQueries from "./admin/ManageQueries";
 import ManageOrder from "./admin/ManageOrder";
-import ManageUsers from "./admin/ManageUsers";
+import ManageUsers from "./admin/adminManageUsers/ManageUsers";
+import AdminAddUser from "./admin/adminManageUsers/AdminAddUser";
+import AdminEditUser from "./admin/adminManageUsers/AdminEditUser";
+import ManageMenu from "./admin/adminManageMenu/ManageMenu";
+import AdminAddMenu from "./admin/adminManageMenu/AdminAddMenu";
+import AdminEditMenu from "./admin/adminManageMenu/AdminEditMenu";
 import ManageContent from "./admin/ManageContent";
 import ReportGeneration from "./admin/ReportGeneration";
 import SystemSettings from "./admin/SystemSettings";  
+
+
 import StaffLogin from "./staff/StaffLogin";  
 import StaffDashboard from "./staff/StaffDashboard";  
 import StaffManageReservations from "./staff/ManageReservations";  
@@ -27,6 +37,11 @@ import StaffManageOrders from "./staff/ManageOrders";
 import StaffUpdateProfile from "./staff/UpdateProfile";  
 import StaffSystemSettings from "./staff/SystemSettings";  
 import StaffLogout from "./staff/Logout";  
+
+
+
+
+
 
 function App() {
   return (
@@ -53,6 +68,11 @@ function App() {
         <Route exact path="/admin/queries" element={ <ManageQueries/>}></Route>
         <Route exact path="/admin/orders" element={ <ManageOrder/>}></Route>
         <Route exact path="/admin/users" element={ <ManageUsers/>}></Route>
+        <Route exact path="/admin/adduser" element={ <AdminAddUser/>}></Route>
+        <Route exact path="/admin/edituser/:id" element={ <AdminEditUser/>}></Route>
+        <Route exact path="/admin/menu" element={ <ManageMenu/>}></Route>
+        <Route exact path="/admin/addmenu" element={ <AdminAddMenu/>}></Route>
+        <Route exact path="/admin/editmenu/:id" element={ <AdminEditMenu/>}></Route>
         <Route exact path="/admin/content" element={ <ManageContent/>}></Route>
         <Route exact path="/admin/reports" element={ <ReportGeneration/>}></Route>
         <Route exact path="/admin/settings" element={ <SystemSettings/>}></Route>

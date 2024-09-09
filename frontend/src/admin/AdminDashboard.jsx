@@ -23,6 +23,14 @@ const AdminDashboard = () => {
             <h2 className="text-2xl font-bold">User Management</h2>
             <p className="mt-2 text-sm">Manage customer and staff accounts.</p>
           </Link>
+          <Link to="/admin/menu" className="bg-[#1f1f1f] hover:bg-[#d4af37] text-center py-12 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+            <h2 className="text-2xl font-bold">Menu Management</h2>
+            <p className="mt-2 text-sm">Manage restaurant menu.</p>
+          </Link>
+          <Link to="/admin/tables" className="bg-[#1f1f1f] hover:bg-[#d4af37] text-center py-12 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+            <h2 className="text-2xl font-bold">Table Management</h2>
+            <p className="mt-2 text-sm">Manage customer and staff accounts.</p>
+          </Link>
           <Link to="/admin/content" className="bg-[#1f1f1f] hover:bg-[#d4af37] text-center py-12 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
             <h2 className="text-2xl font-bold">Content Management</h2>
             <p className="mt-2 text-sm">Update menu items, promotions, and gallery.</p>
