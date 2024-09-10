@@ -2,7 +2,11 @@ package com.abc.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Data
 @Entity
 public class RestaurantTable {
@@ -17,30 +21,9 @@ public class RestaurantTable {
     @Column(nullable = false)
     private Long seatCount;
 
+    @Column(nullable = false)
+    private String location; // e.g., MATARA
+
     //Getters & Setters
 
-
-    public Long getTableId() {
-        return tableId;
-    }
-
-    public void setTableId(Long tableId) {
-        this.tableId = tableId;
-    }
-
-    public String getTableNo() {
-        return tableNo;
-    }
-
-    public void setTableNo(String tableNo) {
-        this.tableNo = tableNo;
-    }
-
-    public Long getSeatCount() {
-        return seatCount;
-    }
-
-    public void setSeatCount(Long seatCount) {
-        this.seatCount = seatCount;
-    }
 }
