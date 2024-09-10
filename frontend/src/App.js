@@ -15,7 +15,7 @@ import Contact from "./pages/Contact";
 
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
-import ManageReservations from "./admin/ManageReservations";
+import ManageReservation from "./admin/adminManageReservation/ManageReservation";
 import ManageQueries from "./admin/ManageQueries";
 import ManageOrder from "./admin/ManageOrder";
 import ManageUsers from "./admin/adminManageUsers/ManageUsers";
@@ -66,7 +66,7 @@ function App() {
         {/* Routing Admin pages' paths */}
         <Route exact path="/admin" element={ <AdminLogin/>}></Route>
         <Route exact path="/admin/dashboard" element={ <AdminDashboard/>}></Route>
-        <Route exact path="/admin/reservations" element={ <ManageReservations/>}></Route>
+        <Route exact path="/admin/reservations" element={ <ManageReservation/>}></Route>
         <Route exact path="/admin/queries" element={ <ManageQueries/>}></Route>
         <Route exact path="/admin/orders" element={ <ManageOrder/>}></Route>
         <Route exact path="/admin/users" element={ <ManageUsers/>}></Route>
