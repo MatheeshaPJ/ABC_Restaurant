@@ -34,6 +34,7 @@ public class RestaurantTableService {
         RestaurantTable table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
         table.setTableNo(tableDetails.getTableNo());
         table.setSeatCount(tableDetails.getSeatCount());
+        table.setLocation(tableDetails.getLocation());
         return tableRepository.save(table);
     }
 
