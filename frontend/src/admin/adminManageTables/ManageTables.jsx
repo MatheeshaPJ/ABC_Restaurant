@@ -6,8 +6,8 @@ const TableManagement = () => {
   const [tables, setTables] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [newTable, setNewTable] = useState({ tableNo: '', seatCount: '' });
-  const [currentTable, setCurrentTable] = useState({ tableId: null, tableNo: '', seatCount: '' });
+  const [newTable, setNewTable] = useState({ tableNo: '', seatCount: '', location: '' });
+  const [currentTable, setCurrentTable] = useState({ tableId: null, tableNo: '', seatCount: '', location: '' });
 
   // Load tables when component is mounted
   useEffect(() => {
@@ -24,21 +24,21 @@ const TableManagement = () => {
   };
 
   const addTable = async () => {
-    if (!newTable.tableNo.trim() || !newTable.seatCount) {
+    if (!newTable.tableNo.trim() || !newTable.seatCount || !newTable.location.trim()) {
       return alert('All fields are required.');
     }
     try {
       await axios.post('http://localhost:8080/table/create', newTable);
       loadTables();
       setShowAddModal(false);
-      setNewTable({ tableNo: '', seatCount: '' });
+      setNewTable({ tableNo: '', seatCount: '', location: '' });
     } catch (error) {
       console.error('Error adding table:', error);
     }
   };
 
   const editTable = async () => {
-    if (!currentTable.tableNo.trim() || !currentTable.seatCount) {
+    if (!currentTable.tableNo.trim() || !currentTable.seatCount || !currentTable.location.trim()) {
       return alert('All fields are required.');
     }
     try {
@@ -85,6 +85,7 @@ const TableManagement = () => {
               <th className="px-4 py-2 text-center text-sm text-gray-700 font-bold">ID</th>
               <th className="px-4 py-2 text-center text-sm text-gray-700 font-bold">Table Number</th>
               <th className="px-4 py-2 text-center text-sm text-gray-700 font-bold">No. of Seats</th>
+              <th className="px-4 py-2 text-center text-sm text-gray-700 font-bold">Location</th>
               <th className="px-4 py-2 text-center text-sm text-gray-700 font-bold">Actions</th>
             </tr>
           </thead>
@@ -94,6 +95,7 @@ const TableManagement = () => {
                 <td className="px-4 py-2 text-gray-700 text-center font-bold">{table.tableId}</td>
                 <td className="px-4 py-2 text-gray-700 text-center">{table.tableNo}</td>
                 <td className="px-4 py-2 text-gray-700 text-center">{table.seatCount}</td>
+                <td className="px-4 py-2 text-gray-700 text-center">{table.location}</td>
                 <td className="px-4 py-2 text-center bg-gray-50">
                   <button
                     onClick={() => {
@@ -138,6 +140,13 @@ const TableManagement = () => {
               value={newTable.seatCount}
               onChange={(e) => setNewTable({ ...newTable, seatCount: e.target.value })}
             />
+            <input
+              type="text"
+              className="border w-full p-2 mb-4"
+              placeholder="Enter location"
+              value={newTable.location}
+              onChange={(e) => setNewTable({ ...newTable, location: e.target.value })}
+            />
             <div className="flex justify-end">
               <button
                 className="outline outline-green-600 text-green-700 hover:bg-green-700 hover:text-white hover:outline-none py-2 px-4 rounded mr-2"
@@ -173,6 +182,12 @@ const TableManagement = () => {
               value={currentTable.seatCount}
               onChange={(e) => setCurrentTable({ ...currentTable, seatCount: e.target.value })}
             />
+            <input
+              type="text"
+              className="border w-full p-2 mb-4"
+              value={currentTable.location}
+              onChange={(e) => setCurrentTable({ ...currentTable, location: e.target.value })}
+            />
             <div className="flex justify-end">
               <button
                 className="outline outline-green-600 text-green-700 hover:bg-green-700 hover:text-white hover:outline-none py-2 px-4 rounded mr-2"
@@ -194,4 +209,4 @@ const TableManagement = () => {
   );
 };
 
-export default TableManagement;
+export default TableManagement
