@@ -1,9 +1,14 @@
 package com.abc.backend.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Arrays;
 
 @Entity
+@Getter
+@Setter
 public class Menu {
 
     @Id
@@ -24,7 +29,7 @@ public class Menu {
     private Double price;
 
     @Column(nullable = false)
-    private String availability;
+    private Boolean availability;
 
     // Adding the image field as a byte array
     @Lob
@@ -32,64 +37,6 @@ public class Menu {
     private byte[] image;
 
 
-    // Getters and Setters
-
-
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(String availability) {
-        this.availability = availability;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 
     @Override
     public String toString() {
