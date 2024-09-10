@@ -17,6 +17,7 @@ const AdminEditMenu = () => {
   const [categories, setCategories] = useState([]);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(""); // State for image preview
+  const [existingImage, setExistingImage] = useState(""); // State to store the current image from the backend
 
   const { item, description, price, category, availability } = menu;
 
@@ -36,14 +37,9 @@ const AdminEditMenu = () => {
           category: result.data.category.categoryId // Assuming the API returns category as an object with categoryId
         });
 
-        // Fetch the image if it exists
-        if (result.data.id) {
-          try {
-            const imageResponse = await axios.get(`http://localhost:8080/menu/image/${id}`, { responseType: 'blob' });
-            setImagePreview(URL.createObjectURL(imageResponse.data));
-          } catch (error) {
-            console.error("Failed to load image", error);
-          }
+        // Set the existing image if it exists
+        if (result.data.menuId) {
+          setExistingImage(`http://localhost:8080/menu/image/${result.data.menuId}`);
         }
       } catch (error) {
         console.error("Failed to load menu item", error);
@@ -62,7 +58,7 @@ const AdminEditMenu = () => {
     const file = e.target.files[0];
     setImage(file);
     if (file) {
-      setImagePreview(URL.createObjectURL(file));
+      setImagePreview(URL.createObjectURL(file)); // Show preview of new image
     }
   };
 
@@ -77,7 +73,7 @@ const AdminEditMenu = () => {
     formData.append('category', category);  // Ensure the category is submitted, even if not changed
     formData.append('availability', availability);
     if (image) {
-      formData.append('image', image);
+      formData.append('image', image);  // Only append the image if a new one is uploaded
     }
 
     // Send updated form data
@@ -160,14 +156,35 @@ const AdminEditMenu = () => {
                 />
               </div>
 
+              {/* Image Section */}
               <div className="mb-4">
                 <label htmlFor="image" className="block text-gray-700 font-medium mb-2">
                   Image
                 </label>
-                {imagePreview && (
+                {imagePreview ? (
+                  // Preview of the new uploaded image
                   <div className="mb-2">
-                    <img src={imagePreview} alt="Current preview" className="w-full h-32 object-cover" />
+                    <img src={imagePreview} alt="New Preview" className="w-full h-32 object-cover" />
                   </div>
+                ) : existingImage ? (
+                  // Display existing image if no new image is uploaded
+                  <div className="mb-2 flex justify-center">
+                    <img
+                      src={existingImage}
+                      alt="Current"
+                      style={{
+                        maxWidth: '100%',
+                        height: 'auto',
+                        objectFit: 'contain',
+                        // Optional: If you want to ensure it doesn't exceed a certain size
+                        maxHeight: '400px' // Adjust this value as needed
+                      }}
+                    />
+                  </div>
+
+
+                ) : (
+                  <p>No image available</p>
                 )}
                 <input
                   type="file"
