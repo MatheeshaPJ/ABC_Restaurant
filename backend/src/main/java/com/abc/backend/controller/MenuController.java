@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,34 +18,69 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:3000") // Allow requests from the React front-end running on localhost:3000
 public class MenuController {
 
     @Autowired
-    private MenuService menuService;
+    private MenuService menuService; // Inject the MenuService for handling business logic
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository; // Inject the CategoryRepository for interacting with the category database
 
+    // Fetches a list of all menu items
     @GetMapping("/menu/getallmenu")
     public List<Menu> getAllMenus() {
-        return menuService.getAllMenus();
+        return menuService.getAllMenus(); // Use service to get the list of all menu items
     }
 
+    // Fetches a specific menu item by its ID
     @GetMapping("/menu/{id}")
     public Menu getMenuById(@PathVariable Long id) {
-        return menuService.getMenuById(id);
+        return menuService.getMenuById(id); // Use service to find a menu item by its ID
     }
 
+    // Retrieves the image of a menu item by its ID
     @GetMapping("/menu/image/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
-        Menu menu = menuService.getMenuById(id);
+        Menu menu = menuService.getMenuById(id); // Get menu item by ID
         if (menu != null && menu.getImage() != null) {
+            // If menu item and its image exist, return the image in JPEG format
             return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG) // Or IMAGE_PNG based on the type of image
+                    .contentType(MediaType.IMAGE_JPEG) // Image type can be JPEG or PNG
                     .body(menu.getImage());
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build(); // If image is not found, return 404
+    }
+
+    // Creates a new menu item
+    @PostMapping("/menu/create")
+    public Menu createMenu(@RequestParam("item") String item,
+                           @RequestParam("description") String description,
+                           @RequestParam("price") Double price,
+                           @RequestParam("availability") Boolean availability, // Changed to Boolean
+                           @RequestParam("category") Long categoryId,
+                           @RequestParam("image") MultipartFile image) throws IOException {
+
+        // Find the category by its ID; if not found, throw an error
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        // Create a new menu object and set its properties
+        Menu menu = new Menu();
+        menu.setItem(item);
+        menu.setDescription(description);
+        menu.setPrice(price);
+        menu.setAvailability(availability); // Set the availability
+        menu.setCategory(category); // Set the category for this menu item
+        menu.setImage(image.getBytes()); // Save the image as byte data
+
+        if (!image.isEmpty()) {
+            // Resize or compress image before storing
+            byte[] resizedImage = resizeImage(image);
+            menu.setImage(resizedImage);
+        }
+        // Save the menu item through the service and return it
+        return menuService.saveMenu(menu);
     }
 
     public byte[] resizeImage(MultipartFile imageFile) throws IOException {
@@ -90,48 +124,16 @@ public class MenuController {
         return formatName;
     }
 
-
-    @PostMapping("/menu/create")
-    public Menu createMenu(@RequestParam("item") String item,
-                           @RequestParam("description") String description,
-                           @RequestParam("price") Double price,
-                           @RequestParam("availability") String availability,
-                           @RequestParam("category") Long categoryId,
-                           @RequestParam("image") MultipartFile image) throws IOException {
-
-        // Fetch the category by ID
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-
-        //create new menu instance
-        Menu menu = new Menu();
-        menu.setItem(item);
-        menu.setDescription(description);
-        menu.setPrice(price);
-        menu.setAvailability(availability);
-        menu.setCategory(category); // Assuming Category exists
-        menu.setImage(image.getBytes());
-
-        if (!image.isEmpty()) {
-            // Resize or compress image before storing
-            byte[] resizedImage = resizeImage(image);
-            menu.setImage(resizedImage);
-        }
-
-
-        return menuService.saveMenu(menu);
-    }
-
+    // Updates an existing menu item
     @PutMapping("/menu/update/{id}")
     public Menu updateMenu(@PathVariable Long id,
                            @RequestParam("item") String item,
                            @RequestParam("description") String description,
                            @RequestParam("price") Double price,
-                           @RequestParam("availability") String availability,
+                           @RequestParam("availability") Boolean availability, // Changed to Boolean
                            @RequestParam("category") Long categoryId,
                            @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
 
-        // Fetch the category by ID
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
@@ -143,7 +145,7 @@ public class MenuController {
             menu.setItem(item);
             menu.setDescription(description);
             menu.setPrice(price);
-            menu.setAvailability(availability);
+            menu.setAvailability(availability); // Update availability
             menu.setCategory(category);
 
             // Only update the image if a new one is provided
@@ -160,9 +162,10 @@ public class MenuController {
         return null;  // Could throw an exception if menu is not found
     }
 
+    // Deletes a menu item by its ID
     @DeleteMapping("/menu/delete/{id}")
     public void deleteMenu(@PathVariable Long id) {
+        // Delete the menu item through the service
         menuService.deleteMenu(id);
     }
-
 }
