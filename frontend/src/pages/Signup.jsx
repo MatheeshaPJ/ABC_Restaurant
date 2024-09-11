@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 const Signup = () => {
     const [user, setUser] = useState({
@@ -11,6 +12,7 @@ const Signup = () => {
         address: "",
         role: "ROLE_CUSTOMER",
     });
+    const [error, setError] = useState(""); // State for error handling
 
     const { email, firstName, lastName, password, address, role } = user;
     const navigate = useNavigate();
@@ -25,15 +27,28 @@ const Signup = () => {
             await axios.post("http://localhost:8080/user/register", user);
             navigate("/signin");
         } catch (error) {
-            console.error("There was an error signing up!", error);
+            if (error.response && error.response.status === 409) { // Assuming 409 is returned for email conflict
+                setError("Email already exists. Please try a different email.");
+            } else {
+                console.error("There was an error signing up!", error);
+                setError("There was an error signing up. Please try again.");
+            }
         }
     };
 
     return (
         <div className='bg-gray-100 min-h-screen flex items-center justify-center'>
-            <div className='w-full max-w-md bg-white p-8 rounded-3xl shadow-lg border border-gray-200'>
+            <Navbar/>
+            <div className='w-full max-w-md bg-white p-8 rounded-3xl shadow-lg border border-gray-200 my-24'>
                 <h1 className='text-4xl font-semibold text-center mb-4'>Register Here</h1>
                 <p className='text-lg text-gray-500 text-center mb-6'>Enter your details to create an account.</p>
+
+                {/* Display error message if exists */}
+                {error && (
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+                        <span className="block sm:inline">{error}</span>
+                    </div>
+                )}
 
                 <form onSubmit={onSubmit}>
                     <div className='mb-4'>

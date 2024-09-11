@@ -102,7 +102,7 @@ const Order = () => {
         deliveryAddress,
         contact,
         finalPrice: totalPrice,
-        userId: loggedInUser.id,
+        customerId: loggedInUser.id,
         userName: loggedInUser.name,
       });
       alert('Order placed successfully!');
@@ -173,22 +173,27 @@ const Order = () => {
               <button className='text-red-500' onClick={() => removeFromCart(item.id)}>Remove</button>
             </div>
           ))}
-          <h3 className='text-xl font-bold mt-4'>Total: Rs. {totalPrice}/=</h3>
+          <h3 className='text-xl font-bold my-4'>Total: Rs. {totalPrice}/=</h3>
+          <hr />
+          <div className='py-10'>
+          <p className='font-bold'>Delivery Address :</p>
           <input
             type='text'
             placeholder='Delivery Address'
-            className='border p-2 w-full sm:w-64 rounded-md focus:ring-2 focus:ring-[#d19831] outline-none mb-4'
+            className='border p-2 w-full sm:w-64 rounded-md focus:ring-2 focus:ring-[#d19831] outline-none my-4 mx-10 bg-gray-200'
             value={deliveryAddress}
             onChange={(e) => setDeliveryAddress(e.target.value)}
           />
+          <p className='font-bold'>Contact info :</p>
           <input
             type='text'
             placeholder='Contact Number'
-            className='border p-2 w-full sm:w-64 rounded-md focus:ring-2 focus:ring-[#d19831] outline-none mb-4'
+            className='border p-2 w-full sm:w-64 rounded-md focus:ring-2 focus:ring-[#d19831] outline-none my-4 mx-10 bg-gray-200'
             value={contact}
             onChange={(e) => setContact(e.target.value)}
           />
           <button className='bg-[#d19831] text-white font-bold py-2 px-6 rounded-md' onClick={submitOrder}>Place Order</button>
+          </div>
         </div>
       )}
 

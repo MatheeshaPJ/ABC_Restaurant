@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 const Signin = () => {
     const [email, setEmail] = useState('');
@@ -34,7 +35,8 @@ const Signin = () => {
 
     return (
         <div className='bg-gray-100 min-h-screen flex items-center justify-center'>
-            <div className='w-full max-w-md bg-white p-8 rounded-3xl shadow-lg border border-gray-200'>
+            <Navbar/>
+            <div className='w-full max-w-md bg-white p-8 rounded-3xl shadow-lg border border-gray-200 my-24'>
                 <h1 className='text-4xl font-semibold text-center mb-4'>Welcome Back</h1>
                 <p className='text-lg text-gray-500 text-center mb-6'>Please enter your sign-in details.</p>
 

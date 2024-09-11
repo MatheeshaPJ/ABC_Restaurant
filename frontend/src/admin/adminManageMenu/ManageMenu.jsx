@@ -80,8 +80,8 @@ const ManageMenu = () => {
                   )}
                 </td>
                 <td className="px-4 py-2 text-gray-700 text-center">
-                  {menu.availability}
-                </td>
+                  {menu.availability ? "Yes" : "No"}
+                </td>
                 <td className="px-4 py-2 text-center bg-gray-50">
                   <Link
                     className="outline outline-green-600 text-green-700 hover:bg-green-700 hover:text-white hover:outline-none py-1 px-3 rounded mr-2 text-xs"

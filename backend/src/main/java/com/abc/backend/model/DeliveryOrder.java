@@ -15,8 +15,8 @@ public class DeliveryOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @Column(columnDefinition = "DATETIME", nullable = false)
-    private LocalDateTime orderTimestamp;
+    @Column(columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
+    private LocalDateTime orderTimestamp= LocalDateTime.now(); // Auto-generated timestamp
 
     @ManyToOne
     @JoinColumn(name = "customerId", nullable = false)

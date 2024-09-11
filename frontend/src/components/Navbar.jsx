@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { AiOutlineClose, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const [nav, setNav] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
+    // Check if the user is logged in by checking sessionStorage
+    useEffect(() => {
+        const user = sessionStorage.getItem('user');
+        if (user) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
 
     const handleNav = () => {
         setNav(!nav);
+    };
+
+    // Handle logout logic
+    const handleLogout = () => {
+        sessionStorage.removeItem('user'); // Clear the user from session storage
+        setIsLoggedIn(false); // Set logged-in state to false
+        navigate('/signin'); // Redirect to signin page
     };
 
     return (
@@ -18,7 +37,35 @@ const Navbar = () => {
                         <Link key={item} className='p-4 hover:scale-105 duration-300 cursor-pointer' to={`/${item.toLowerCase()}`}>{item}</Link>
                     ))}
                 </ul>
-                <Link className='bg-[#d19831] w-[200px] rounded-md  font-bold my-4 mx-4 py-3 text-center text-black hover:scale-105 duration-300' to="/signin">Sign-in</Link>
+
+                {/* Conditionally render based on login status */}
+                {isLoggedIn ? (
+                    <div className="flex items-center space-x-4">
+                        {/* Profile/Avatar Icon */}
+                        <Link
+                            to="/profile"
+                            className="flex items-center bg-[#d19831] text-black px-4 py-2 rounded-md hover:scale-105 duration-300"
+                        >
+                            <AiOutlineUser size={24} className="mr-2" />
+                            Profile
+                        </Link>
+
+                        {/* Logout Button */}
+                        <button
+                            onClick={handleLogout}
+                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:scale-105 duration-300"
+                        >
+                            Logout
+                        </button>
+                    </div>
+                ) : (
+                    <Link
+                        className='bg-[#d19831] w-[200px] rounded-md font-bold my-4 mx-4 py-3 text-center text-black hover:scale-105 duration-300'
+                        to="/signin"
+                    >
+                        Sign-in
+                    </Link>
+                )}
 
                 <div onClick={handleNav} className='block md:hidden'>
                     {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}

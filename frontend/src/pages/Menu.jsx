@@ -10,9 +10,7 @@ const MenuItem = ({ title, price, description, imageSrc }) => (
       <h2 className='text-2xl font-semibold text-gray-800'>{title}</h2>
       <p className='text-gray-600 mt-2'>{description}</p>
       <p className='text-xl font-bold text-[#d19831] mt-4'>Rs. {price}/=</p>
-      <button className='mt-6 bg-[#000000] text-white py-2 px-6 rounded-full hover:bg-[#d19831] transition-colors duration-300'>
-        Order Now
-      </button>
+      
     </div>
   </div>
 );
