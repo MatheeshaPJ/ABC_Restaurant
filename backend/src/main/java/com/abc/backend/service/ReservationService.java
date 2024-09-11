@@ -1,8 +1,8 @@
 package com.abc.backend.service;
 
-
 import com.abc.backend.model.Reservation;
 import com.abc.backend.model.RestaurantTable;
+import com.abc.backend.model.User;
 import com.abc.backend.repository.ReservationRepository;
 import com.abc.backend.repository.RestaurantTableRepository;
 import jakarta.transaction.Transactional;
@@ -76,6 +76,11 @@ public class ReservationService {
     }
     public void deleteReservation(Long id) {
         reservationRepository.deleteById(id);
+    }
+
+    // Get all reservations for a customer
+    public List<Reservation> getReservationsByCustomer(User customerId) {
+        return reservationRepository.findByCustomer(customerId);
     }
 
 }

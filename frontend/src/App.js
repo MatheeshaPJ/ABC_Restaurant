@@ -11,6 +11,7 @@ import Order from "./pages/Order";
 import Gallery from "./pages/Gallery";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Profile from "./pages/Profile";
 
 
 import AdminLogin from "./admin/AdminLogin";
@@ -54,6 +55,7 @@ function App() {
 
         {/* Routing Customer pages' paths */}
         <Route exact path="/" element={ <Home/>}></Route>
+        <Route exact path="/home" element={ <Home/>}></Route>
         <Route exact path="/signin" element={ <Signin/>}></Route>
         <Route exact path="/signup" element={ <Signup/>}></Route>
         <Route exact path="/menu" element={ <Menu/>}></Route>
@@ -62,6 +64,7 @@ function App() {
         <Route exact path="/gallery" element={ <Gallery/>}></Route>
         <Route exact path="/about" element={ <About/>}></Route>
         <Route exact path="/contact" element={ <Contact/>}></Route>
+        <Route exact path="/profile" element={ <Profile/>}></Route>
 
         {/* Routing Admin pages' paths */}
         <Route exact path="/admin" element={ <AdminLogin/>}></Route>

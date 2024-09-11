@@ -2,21 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import burger from '../assets/burger.png'; // Example image, replace with actual images
+import { useNavigate } from 'react-router-dom';
 
 const MenuItem = ({ title, price, imageSrc, addToCart, availability }) => (
-  <div className='w-full shadow-lg flex flex-col p-4 rounded-lg hover:scale-105 transition-transform duration-300 bg-white border border-gray-200'>
-    <img className='w-full h-48 object-cover rounded-t-lg' src={imageSrc} alt={title} />
-    <div className='p-4'>
-      <h2 className='text-2xl font-bold text-center mb-2'>{title}</h2>
-      <p className='text-3xl font-bold text-center mb-4'>Rs. {price}/=</p>
-      <div className='text-center font-medium mb-4'>
-        <p className='py-1'>Delicious</p>
-        <p className='py-1'>Tasty</p>
-        <p className='py-1'>For You</p>
-      </div>
+  <div className='bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 border border-gray-200'>
+    <img className='w-full h-52 object-cover' src={imageSrc} alt={title} />
+    <div className='p-6 text-center'>
+      <h2 className='text-2xl font-semibold text-gray-800'>{title}</h2>
+      <p className='text-xl font-bold text-[#d19831] mt-4'>Rs. {price}/=</p>
       <button
-        className={`bg-[#000000] w-full rounded-md font-medium py-3 text-white hover:bg-[#333333] transition-colors ${availability === 'No' ? 'opacity-50 cursor-not-allowed' : ''}`}
+        className={`mt-6 bg-[#000000] text-white py-2 px-6 rounded-full hover:bg-[#333333] transition-colors duration-300 ${availability === 'No' ? 'opacity-50 cursor-not-allowed' : ''}`}
         disabled={availability === 'No'}
         onClick={addToCart}
       >
@@ -27,6 +22,7 @@ const MenuItem = ({ title, price, imageSrc, addToCart, availability }) => (
 );
 
 const Order = () => {
+  const navigate = useNavigate(); // Hook for navigation
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [categories, setCategories] = useState(['All']);
@@ -36,13 +32,19 @@ const Order = () => {
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [contact, setContact] = useState('');
 
-  // Fetch categories from the API
+  useEffect(() => {
+    // Check if user is logged in
+    const user = sessionStorage.getItem('user');
+    if (!user) {
+      navigate('/signin'); // Redirect to sign-in page if not logged in
+    }
+  }, [navigate]);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get('http://localhost:8080/category/getallcategory');
-        const fetchedCategories = response.data.map((cat) => cat.categoryName);
-        setCategories(['All', ...fetchedCategories]);
+        setCategories(['All', ...response.data.map(cat => cat.categoryName)]);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
@@ -50,21 +52,18 @@ const Order = () => {
     fetchCategories();
   }, []);
 
-  // Fetch food items from the API
   useEffect(() => {
     const fetchFoodItems = async () => {
       try {
         const response = await axios.get('http://localhost:8080/menu/getallmenu');
-        const fetchedFoodItems = response.data.map((menuItem) => ({
-          id: menuItem.menuId,
-          name: menuItem.item,
-          price: menuItem.price,
-          image: `http://localhost:8080/menu/image/${menuItem.menuId}`,
-          category: menuItem.category.categoryName,
-          description: menuItem.description,
-          availability: menuItem.availability ? 'Yes' : 'No'
-        }));
-        setFoodItems(fetchedFoodItems);
+        setFoodItems(response.data.map(item => ({
+          id: item.menuId,
+          name: item.item,
+          price: item.price,
+          image: `http://localhost:8080/menu/image/${item.menuId}`,
+          category: item.category.categoryName,
+          availability: item.availability ? 'Yes' : 'No'
+        })));
       } catch (error) {
         console.error('Error fetching food items:', error);
       }
@@ -72,104 +71,67 @@ const Order = () => {
     fetchFoodItems();
   }, []);
 
-  // Calculate the total price of items in the cart whenever the cart updates
   useEffect(() => {
-    const calculateTotalPrice = () => {
-      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-      setTotalPrice(total);
-    };
-    calculateTotalPrice();
+    setTotalPrice(cart.reduce((total, item) => total + item.price * item.quantity, 0));
   }, [cart]);
 
-  // Function to add items to the cart
   const addToCart = (item) => {
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
     if (existingItem) {
-      // Update quantity if item is already in the cart
-      setCart(cart.map(cartItem =>
-        cartItem.id === item.id
-          ? { ...cartItem, quantity: cartItem.quantity + 1 }
-          : cartItem
-      ));
+      setCart(cart.map(cartItem => cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem));
     } else {
-      // Add new item to cart
       setCart([...cart, { ...item, quantity: 1 }]);
     }
   };
 
-  // Function to remove items from the cart
   const removeFromCart = (itemId) => {
-    const updatedCart = cart.filter(item => item.id !== itemId);
-    setCart(updatedCart);
+    setCart(cart.filter(item => item.id !== itemId));
   };
 
-  // Function to submit the order
   const submitOrder = async () => {
-    if (cart.length === 0) {
-      alert('Your cart is empty! Please add some items to the cart.');
+    if (cart.length === 0 || !deliveryAddress || !contact) {
+      alert('Please fill out all fields before placing the order.');
       return;
     }
-
-    if (!deliveryAddress || !contact) {
-      alert('Please enter both delivery address and contact details.');
-      return;
-    }
-
+    const loggedInUser = JSON.parse(localStorage.getItem('user'));
+    
     try {
-      const orderItems = cart.map(item => ({
-        itemId: item.id,
-        quantity: item.quantity,
-        price: item.price
-      }));
-
-      const orderData = {
+      const orderItems = cart.map(item => ({ itemId: item.id, quantity: item.quantity, price: item.price }));
+      await axios.post('http://localhost:8080/order/place-order', {
         items: orderItems,
         deliveryAddress,
         contact,
-        finalPrice: totalPrice
-      };
-
-      await axios.post('http://localhost:8080/order/place-order', orderData);
-      alert('Order submitted successfully!');
-      setCart([]); // Clear the cart after successful submission
-      setDeliveryAddress(''); // Clear delivery address
-      setContact(''); // Clear contact details
+        finalPrice: totalPrice,
+        userId: loggedInUser.id,
+        userName: loggedInUser.name,
+      });
+      alert('Order placed successfully!');
+      setCart([]);
+      setDeliveryAddress('');
+      setContact('');
     } catch (error) {
-      console.error('Error submitting order:', error);
-      alert('Failed to submit the order.');
+      console.error('Error placing order:', error);
+      alert('Order submission failed.');
     }
   };
 
-  // Filter food items based on the search term and selected category
-  const filteredItems = foodItems.filter(
-    (item) =>
-      (selectedCategory === 'All' || item.category === selectedCategory) &&
-      item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
-    <div>
+    <div className='min-h-screen bg-gradient-to-b from-white via-[#f8f9fa] to-[#d19831]'>
       <Navbar />
-      <header className='text-center bg-[#d19831] mt-20 py-8'>
-        <p className='text-black font-bold text-3xl'>Order Your Favorite Dish</p>
+      <header className='text-center bg-[#d19831] py-10 mt-20'>
+        <h1 className='text-5xl font-extrabold text-white'>Order Your Favorite Dish</h1>
       </header>
-      
-      {/* Search bar */}
-      <div className='w-full px-4 bg-white text-center py-4'>
+
+      <div className='w-full px-4 py-4 bg-white flex flex-col sm:flex-row justify-center items-center gap-4'>
         <input
           type='text'
           placeholder='Search for food...'
-          className='border p-2 w-[300px] rounded-md focus:ring-2 focus:ring-[#d19831] outline-none'
+          className='border border-gray-300 p-2 w-full sm:w-64 rounded-md focus:ring-2 focus:ring-[#d19831] outline-none'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </div>
-
-      {/* Category selection */}
-      <div className='w-full px-4 bg-white text-center py-4'>
-        <div className='flex justify-center items-center font-semibold text-xl'>Categories</div>
         <select
-          className='border p-2 rounded-md focus:ring-2 focus:ring-[#d19831] outline-none'
+          className='border p-2 rounded-md focus:ring-2 focus:ring-[#d19831] outline-none w-full sm:w-48'
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
@@ -181,78 +143,58 @@ const Order = () => {
         </select>
       </div>
 
-      {/* Display filtered food items */}
-      <div className='w-full px-4 bg-gray-100 py-12'>
-        <div className='max-w-[1240px] mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
-          {filteredItems.length ? (
-            filteredItems.map((item) => (
-              <MenuItem
-                key={item.id}
-                title={item.name}
-                price={item.price}
-                imageSrc={item.image}
-                addToCart={() => addToCart(item)}
-                availability={item.availability}
-              />
-            ))
+      <section className='py-12'>
+        <div className='max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
+          {foodItems.length ? (
+            foodItems
+              .filter(item => (selectedCategory === 'All' || item.category === selectedCategory) && item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+              .map(item => (
+                <MenuItem
+                  key={item.id}
+                  title={item.name}
+                  price={item.price}
+                  imageSrc={item.image}
+                  addToCart={() => addToCart(item)}
+                  availability={item.availability}
+                />
+              ))
           ) : (
-            <p className='text-center w-full text-gray-600'>No food items found.</p>
+            <p className='text-center w-full text-gray-600'>No food items found. Please try a different search.</p>
           )}
         </div>
-      </div>
+      </section>
 
-      {/* Cart Summary */}
       {cart.length > 0 && (
-        <div className='w-full px-4 bg-white text-center py-4'>
+        <div className='w-full px-4 py-4 bg-white text-center'>
           <h2 className='text-2xl font-bold'>Cart</h2>
-          <div className='flex flex-col items-center'>
-            {cart.map((item) => (
-              <div key={item.id} className='w-full border-b py-2'>
-                <p>{item.name} - Rs. {item.price} x {item.quantity}</p>
-                <button 
-                  className='text-red-500' 
-                  onClick={() => removeFromCart(item.id)}
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
-            <h3 className='text-xl font-bold mt-4'>Total Price: Rs. {totalPrice}</h3>
-            <div className='w-full px-4 bg-white text-left py-4'>
-              <input
-                type='text'
-                placeholder='Enter delivery address'
-                className='border p-2 w-full rounded-md focus:ring-2 focus:ring-[#d19831] outline-none mb-4'
-                value={deliveryAddress}
-                onChange={(e) => setDeliveryAddress(e.target.value)}
-              />
-              <input
-                type='text'
-                placeholder='Enter contact number'
-                className='border p-2 w-full rounded-md focus:ring-2 focus:ring-[#d19831] outline-none'
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
-              />
+          {cart.map(item => (
+            <div key={item.id} className='w-full border-b py-2'>
+              <p>{item.name} - Rs. {item.price} x {item.quantity}</p>
+              <button className='text-red-500' onClick={() => removeFromCart(item.id)}>Remove</button>
             </div>
-            <button 
-              className='bg-[#000000] w-[300px] rounded-md font-medium my-6 px-6 mx-auto py-3 text-white'
-              onClick={submitOrder}
-            >
-              Pay and Submit Order
-            </button>
-          </div>
+          ))}
+          <h3 className='text-xl font-bold mt-4'>Total: Rs. {totalPrice}/=</h3>
+          <input
+            type='text'
+            placeholder='Delivery Address'
+            className='border p-2 w-full sm:w-64 rounded-md focus:ring-2 focus:ring-[#d19831] outline-none mb-4'
+            value={deliveryAddress}
+            onChange={(e) => setDeliveryAddress(e.target.value)}
+          />
+          <input
+            type='text'
+            placeholder='Contact Number'
+            className='border p-2 w-full sm:w-64 rounded-md focus:ring-2 focus:ring-[#d19831] outline-none mb-4'
+            value={contact}
+            onChange={(e) => setContact(e.target.value)}
+          />
+          <button className='bg-[#d19831] text-white font-bold py-2 px-6 rounded-md' onClick={submitOrder}>Place Order</button>
         </div>
       )}
 
-      <div className='bg-black'>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };
 
 export default Order;
-
-
-
-//UserId should be sent from here with the post request

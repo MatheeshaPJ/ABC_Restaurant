@@ -14,13 +14,9 @@ const Navbar = () => {
             <div className='flex justify-between items-center h-20 max-w-[1240px] mx-auto px-4'>
                 <Link className='w-full text-3xl font-bold text-[#d19831] m-4 cursor-pointer' to="/">ABC Restaurant</Link>
                 <ul className='hidden md:flex'>
-                    <Link className='p-4 hover:scale-105 duration-300 cursor-pointer' to='/'>Home</Link>
-                    <Link className='p-4 hover:scale-105 duration-300 cursor-pointer' to='/menu'>Menu</Link>
-                    <Link className='p-4 hover:scale-105 duration-300 cursor-pointer' to='/reservation'>Reservation</Link>
-                    <Link className='p-4 hover:scale-105 duration-300 cursor-pointer' to='/order'>Order</Link>
-                    <Link className='p-4 hover:scale-105 duration-300 cursor-pointer' to='/contact'>Contact</Link>
-                    <Link className='p-4 hover:scale-105 duration-300 cursor-pointer' to='/gallery'>Gallery</Link>
-                    <Link className='p-4 hover:scale-105 duration-300 cursor-pointer' to='/about'>About</Link>
+                    {['Home', 'Menu', 'Reservation', 'Order', 'Contact', 'Gallery', 'About'].map((item) => (
+                        <Link key={item} className='p-4 hover:scale-105 duration-300 cursor-pointer' to={`/${item.toLowerCase()}`}>{item}</Link>
+                    ))}
                 </ul>
                 <Link className='bg-[#d19831] w-[200px] rounded-md  font-bold my-4 mx-4 py-3 text-center text-black hover:scale-105 duration-300' to="/signin">Sign-in</Link>
 
@@ -32,11 +28,9 @@ const Navbar = () => {
             <div className={nav ? 'fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500' : 'fixed left-[-100%] duration-500'}>
                 <h1 className='w-full text-3xl font-bold text-[#d19831] m-4 cursor-pointer'>ABC Restaurant</h1>
                 <ul className='p-4 uppercase'>
-                    <li className='p-4 border-b border-b-gray-600 hover:scale-105 duration-300 cursor-pointer'>Home</li>
-                    <li className='p-4 border-b border-b-gray-600 hover:scale-105 duration-300 cursor-pointer'>Menu</li>
-                    <li className='p-4 border-b border-b-gray-600 hover:scale-105 duration-300 cursor-pointer'>Services</li>
-                    <li className='p-4 border-b border-b-gray-600 hover:scale-105 duration-300 cursor-pointer'>Contact</li>
-                    <li className='p-4 hover:scale-105 duration-300 cursor-pointer'>About</li>
+                    {['Home', 'Menu', 'Services', 'Contact', 'About'].map((item) => (
+                        <li key={item} onClick={handleNav} className='p-4 border-b border-b-gray-600 hover:scale-105 duration-300 cursor-pointer'>{item}</li>
+                    ))}
                 </ul>
             </div>
         </div>

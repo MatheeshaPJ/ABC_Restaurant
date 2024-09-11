@@ -4,13 +4,13 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const MenuItem = ({ title, price, description, imageSrc }) => (
-  <div className='bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300'>
-    <img className='w-full h-48 object-cover' src={imageSrc} alt={title} />
-    <div className='p-6'>
-      <h2 className='text-2xl font-bold text-gray-800 text-center'>{title}</h2>
-      <p className='text-gray-600 text-center mt-2'>{description}</p>
-      <p className='text-xl font-bold text-center text-[#d19831] mt-4'>Rs. {price}/=</p>
-      <button className='block bg-[#000000] text-white font-medium py-2 px-4 mt-6 mx-auto rounded-md hover:bg-[#d19831] transition-colors duration-300'>
+  <div className='bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300'>
+    <img className='w-full h-52 object-cover' src={imageSrc} alt={title} />
+    <div className='p-6 text-center'>
+      <h2 className='text-2xl font-semibold text-gray-800'>{title}</h2>
+      <p className='text-gray-600 mt-2'>{description}</p>
+      <p className='text-xl font-bold text-[#d19831] mt-4'>Rs. {price}/=</p>
+      <button className='mt-6 bg-[#000000] text-white py-2 px-6 rounded-full hover:bg-[#d19831] transition-colors duration-300'>
         Order Now
       </button>
     </div>
@@ -23,7 +23,6 @@ const Menu = () => {
   const [categories, setCategories] = useState(['All']);
   const [foodItems, setFoodItems] = useState([]);
 
-  // Fetch categories from the API
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -37,7 +36,6 @@ const Menu = () => {
     fetchCategories();
   }, []);
 
-  // Fetch food items from the API
   useEffect(() => {
     const fetchFoodItems = async () => {
       try {
@@ -49,7 +47,7 @@ const Menu = () => {
           imageSrc: `http://localhost:8080/menu/image/${menuItem.menuId}`,
           category: menuItem.category.categoryName,
           description: menuItem.description,
-          availability: menuItem.availability ? 'Yes' : 'No' // Adjust for boolean value
+          availability: menuItem.availability ? 'Yes' : 'No'
         }));
         setFoodItems(fetchedFoodItems);
       } catch (error) {
@@ -59,7 +57,6 @@ const Menu = () => {
     fetchFoodItems();
   }, []);
 
-  // Filter food items based on the search term and selected category
   const filteredItems = foodItems.filter(
     (item) =>
       (selectedCategory === 'All' || item.category === selectedCategory) &&
@@ -69,26 +66,21 @@ const Menu = () => {
   return (
     <div className='min-h-screen bg-gradient-to-b from-white via-[#f8f9fa] to-[#d19831]'>
       <Navbar />
-      <header className='text-center bg-[#d19831] py-8 mt-20'>
-        <h1 className='text-4xl font-bold text-white'>Our Menu</h1>
-        <p className='text-lg text-white mt-2'>Delicious food made with love and the finest ingredients.</p>
+      <header className='text-center bg-[#d19831] py-10 mt-20'>
+        <h1 className='text-5xl font-extrabold text-white'>Our Menu</h1>
+        <p className='text-lg text-white mt-2'>Fresh, delicious food for every mood.</p>
       </header>
 
-      {/* Search bar */}
-      <div className='w-full px-4 bg-white text-center py-4'>
+      <div className='w-full px-4 py-4 bg-white flex flex-col sm:flex-row justify-center items-center gap-4'>
         <input
           type='text'
           placeholder='Search for food...'
-          className='border p-2 w-[300px] rounded-md focus:ring-2 focus:ring-[#f09c20] outline-none'
+          className='border border-gray-300 p-2 w-full sm:w-64 rounded-md focus:ring-2 focus:ring-[#f09c20] outline-none'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </div>
-
-      {/* Category selection */}
-      <div className='w-full px-4 bg-white text-center py-4'>
         <select
-          className='border p-2 rounded-md focus:ring-2 focus:ring-[#f09c20] outline-none'
+          className='border p-2 rounded-md focus:ring-2 focus:ring-[#f09c20] outline-none w-full sm:w-48'
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
@@ -100,9 +92,8 @@ const Menu = () => {
         </select>
       </div>
 
-      {/* Display filtered food items */}
       <section className='py-12'>
-        <div className='max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-12'>
+        <div className='max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
           {filteredItems.length ? (
             filteredItems.map((item) => (
               <MenuItem
@@ -119,9 +110,7 @@ const Menu = () => {
         </div>
       </section>
 
-      <div className='bg-black'>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

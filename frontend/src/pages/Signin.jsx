@@ -3,105 +3,98 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Signin = () => {
-
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      try {
-        // Send a POST request to the backend with email and password
-        const response = await axios.post('http://localhost:8080/login', {
-          email: email,
-          password: password
-        });
-  
-        // If login is successful, redirect to the dashboard or another page
-        if (response.data) {
-          // You can save user data to localStorage or context if needed
-          // For example: localStorage.setItem('user', JSON.stringify(response.data));
-          
-          navigate('/'); // Navigate to the dashboard after successful login
-        }
-      } catch (err) {
-        // Handle error if login fails
-        setError('Invalid email or password');
-      }
-    };
-  
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8080/user/login', {
+                email: email,
+                password: password
+            });
+
+            if (response.data) {
+                // Assuming response.data contains user information
+                const user = response.data;
+                
+                // Store user data in sessionStorage
+                sessionStorage.setItem('user', JSON.stringify(user));
+
+                // Navigate to the dashboard after successful login
+                navigate('/');
+            }
+        } catch (err) {
+            setError('Invalid email or password');
+        }
+    };
 
     return (
-      <div className='bg-white h-full '>
-        <div className='flex w-full h-screen justify-center items-center'>
-          <div className='w-full lg:w-2/5 justify-center items-center bg-white px-10 py-10 mt- rounded-3xl border-2 border-gray-200 shadow'>
-            <h1 className='text-5xl font-semibold text-center'>Welcome Back</h1>
-            <p className='font-medium text-lg text-gray-500 mt-4 text-center'>
-              Welcome back! Please Enter Your Sign-in details.
-            </p>
-  
-            {/* Display error message */}
-            {error && <p className="text-red-500 text-center">{error}</p>}
-  
-            <form onSubmit={handleSubmit} className='mt-8'>
-              <div>
-                <label className='text-lg font-medium'>Email</label>
-                <input 
-                  type='email'
-                  className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
-                  placeholder='Enter your Email'
-                  name='email'
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label className='text-lg font-medium'>Password</label>
-                <input 
-                  className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
-                  placeholder='Enter your Password'
-                  type='password'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-  
-              <div className='mt-8 flex justify-between items-center'>
-                <div>
-                  <input type="checkbox" name="showPassword" id="showPassword" />
-                  <label htmlFor="showPassword" className='ml-2 font-medium text-base'>Show Password</label>
-                </div>
-                <button className='ml-2 font-medium text-base text-blue-400'>Forgot password</button>
-              </div>
-  
-              <div className='mt-8 flex flex-col gap-y-4'>
-                <button type='submit' className='bg-[#f09c20] text-white text-lg font-bold py-3 rounded-xl active:scale-[.98] transition-all hover:scale-[1.01] ease-in-out text-center'>
-                  Sign-in
-                </button>
-              </div>
-  
-              <div className='mt-8 flex justify-center items-center'>
-                <p className='font-medium text-base'>Don't have an account?</p>
-                <Link className='text-blue-400 text-base font-medium ml-2' to='/signup'>Sign up</Link>
-              </div>
-            </form>
-          </div>
+        <div className='bg-gray-100 min-h-screen flex items-center justify-center'>
+            <div className='w-full max-w-md bg-white p-8 rounded-3xl shadow-lg border border-gray-200'>
+                <h1 className='text-4xl font-semibold text-center mb-4'>Welcome Back</h1>
+                <p className='text-lg text-gray-500 text-center mb-6'>Please enter your sign-in details.</p>
+
+                {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+
+                <form onSubmit={handleSubmit}>
+                    <div className='mb-4'>
+                        <label className='block text-gray-700 text-lg font-medium mb-1' htmlFor="email">Email</label>
+                        <input
+                            type='email'
+                            id='email'
+                            className='w-full border-2 border-gray-300 rounded-lg p-3'
+                            placeholder='Enter your email'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className='mb-4'>
+                        <label className='block text-gray-700 text-lg font-medium mb-1' htmlFor="password">Password</label>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            id='password'
+                            className='w-full border-2 border-gray-300 rounded-lg p-3'
+                            placeholder='Enter your password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <div className='flex items-center mt-2'>
+                            <input
+                                type="checkbox"
+                                id="showPassword"
+                                checked={showPassword}
+                                onChange={() => setShowPassword(!showPassword)}
+                                className='mr-2'
+                            />
+                            <label htmlFor="showPassword" className='text-gray-700'>Show Password</label>
+                        </div>
+                    </div>
+
+                    <div className='flex justify-between items-center mb-4'>
+                        <Link className='text-blue-500' to='/forgot-password'>Forgot password?</Link>
+                    </div>
+
+                    <button
+                        type='submit'
+                        className='w-full bg-orange-500 text-white text-lg font-bold py-3 rounded-lg hover:bg-orange-600 transition'
+                    >
+                        Sign In
+                    </button>
+
+                    <div className='text-center mt-4'>
+                        <p className='text-gray-700'>Don't have an account?</p>
+                        <Link className='text-blue-500 font-medium' to='/signup'>Sign Up</Link>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
     );
 }
 
 export default Signin;
-
- 
-
-
-
-
-

@@ -14,10 +14,10 @@ const Contact = () => {
             <p className='text-[#d19831] font-bold uppercase'>Hungry Burger</p>
             <h1 className='md:text-4xl sm:text-3xl text-2xl font-bold py-2'>Just Order When You Feel Hungry!</h1>
             <p className='text-gray-700'>
-              We’re here to satisfy your cravings with delicious meals. Place your order and enjoy our mouthwatering dishes, or reach out to us if you have any questions!
+              We're here to satisfy your cravings with delicious meals. Place your order and enjoy our mouthwatering dishes, or reach out to us if you have any questions!
             </p>
             <button className='bg-black text-[#d19831] w-[200px] rounded-md font-medium my-6 py-3 hover:scale-105 transition-transform duration-300'>
-              Order Now
+              Call us Now
             </button>
           </div>
           <img className='w-[400px] mx-auto my-4 hover:scale-105 transition-transform duration-300' src={burger} alt="Delicious burger" />

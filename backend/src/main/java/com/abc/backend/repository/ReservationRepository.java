@@ -3,6 +3,7 @@ package com.abc.backend.repository;
 
 import com.abc.backend.model.Reservation;
 import com.abc.backend.model.RestaurantTable;
+import com.abc.backend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +13,9 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation,Long> {
+
+    // Fetch all orders for a specific customer
+    List<Reservation> findByCustomer(User customer);
 
     // Query to find reservations for a given date, time, and location
     @Query("SELECT r.table FROM Reservation r WHERE r.reservationDate = :date AND r.reservationTime = :time AND r.location = :location")

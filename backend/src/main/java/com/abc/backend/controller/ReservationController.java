@@ -3,7 +3,9 @@ package com.abc.backend.controller;
 
 import com.abc.backend.model.Reservation;
 import com.abc.backend.model.RestaurantTable;
+import com.abc.backend.model.User;
 import com.abc.backend.service.ReservationService;
+import com.abc.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,9 @@ public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private UserService userService;
 
     // Endpoint to check available tables
     @GetMapping("/reservation/available-tables")
@@ -89,4 +94,15 @@ public class ReservationController {
             return ResponseEntity.status(500).body("Error deleting reservation: " + e.getMessage());
         }
     }
+
+    // Endpoint to retrieve all reservations for a specific customer
+    @GetMapping("/reservation/customer/{customerId}")
+    public ResponseEntity<List<Reservation>> getReservationsByCustomer(@PathVariable Long customerId) {
+
+        User customer = userService.getUserById(customerId);
+
+        List<Reservation> reservations = reservationService.getReservationsByCustomer(customer);
+        return ResponseEntity.ok(reservations);
+    }
+
 }
