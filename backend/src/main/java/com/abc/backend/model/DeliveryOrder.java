@@ -1,9 +1,13 @@
 package com.abc.backend.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
 @Entity
 public class DeliveryOrder {
 
@@ -15,54 +19,19 @@ public class DeliveryOrder {
     private LocalDateTime orderTimestamp;
 
     @ManyToOne
-    @JoinColumn(name = "custId", nullable = false)
-    private User customerId;
+    @JoinColumn(name = "customerId", nullable = false)
+    private User customerId;      //Logged-in user
 
     @Column(nullable = false)
     private String deliveryAddress;
 
     @Column(nullable = false)
-    private String status;
+    private String status;      //(PENDING, CONFIRMED, READY-FOR-DELIVERY, OUT-FOR-DELIVERY, COMPLETED, CANCELLED, FAILED)
 
-    //Getters & Setters
+    @Column(nullable = false)
+    private String contact;
 
-    public Long getOrderId() {
-        return orderId;
-    }
+    @Column(nullable = false)
+    private Double finalPrice;      //Summation of prices all items
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public LocalDateTime getOrderTimestamp() {
-        return orderTimestamp;
-    }
-
-    public void setOrderTimestamp(LocalDateTime orderTimestamp) {
-        this.orderTimestamp = orderTimestamp;
-    }
-
-    public User getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(User customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }
