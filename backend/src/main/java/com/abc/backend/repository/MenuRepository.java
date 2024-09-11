@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MenuRepository extends JpaRepository<Menu, Long> {
+
+    // Fetch menu item by ID
+    Menu findByMenuId(Long menuId);
+
 }
