@@ -36,8 +36,7 @@ public class Menu {
     @Column(name = "image", columnDefinition = "LONGBLOB")
     private byte[] image;
 
-
-
+    //String attributes
     @Override
     public String toString() {
         return "Menu{" +
