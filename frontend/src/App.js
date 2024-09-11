@@ -17,7 +17,7 @@ import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 import ManageReservation from "./admin/adminManageReservation/ManageReservation";
 import ManageQueries from "./admin/ManageQueries";
-import ManageOrder from "./admin/ManageOrder";
+import ManageOrder from "./admin/adminManageOrder/ManageOrder";
 import ManageUsers from "./admin/adminManageUsers/ManageUsers";
 import AdminAddUser from "./admin/adminManageUsers/AdminAddUser";
 import AdminEditUser from "./admin/adminManageUsers/AdminEditUser";
