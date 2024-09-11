@@ -31,8 +31,10 @@ const Order = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [categories, setCategories] = useState(['All']);
   const [foodItems, setFoodItems] = useState([]);
-  const [cart, setCart] = useState([]); // Cart state to store selected items
-  const [totalPrice, setTotalPrice] = useState(0); // State to store the total price
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [contact, setContact] = useState('');
 
   // Fetch categories from the API
   useEffect(() => {
@@ -60,7 +62,7 @@ const Order = () => {
           image: `http://localhost:8080/menu/image/${menuItem.menuId}`,
           category: menuItem.category.categoryName,
           description: menuItem.description,
-          availability: menuItem.availability ? 'Yes' : 'No' // Adjust for boolean value
+          availability: menuItem.availability ? 'Yes' : 'No'
         }));
         setFoodItems(fetchedFoodItems);
       } catch (error) {
@@ -73,7 +75,7 @@ const Order = () => {
   // Calculate the total price of items in the cart whenever the cart updates
   useEffect(() => {
     const calculateTotalPrice = () => {
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
       setTotalPrice(total);
     };
     calculateTotalPrice();
@@ -81,7 +83,18 @@ const Order = () => {
 
   // Function to add items to the cart
   const addToCart = (item) => {
-    setCart([...cart, item]);
+    const existingItem = cart.find(cartItem => cartItem.id === item.id);
+    if (existingItem) {
+      // Update quantity if item is already in the cart
+      setCart(cart.map(cartItem =>
+        cartItem.id === item.id
+          ? { ...cartItem, quantity: cartItem.quantity + 1 }
+          : cartItem
+      ));
+    } else {
+      // Add new item to cart
+      setCart([...cart, { ...item, quantity: 1 }]);
+    }
   };
 
   // Function to remove items from the cart
@@ -97,10 +110,30 @@ const Order = () => {
       return;
     }
 
+    if (!deliveryAddress || !contact) {
+      alert('Please enter both delivery address and contact details.');
+      return;
+    }
+
     try {
-      await axios.post('http://localhost:8080/orders', { items: cart });
+      const orderItems = cart.map(item => ({
+        itemId: item.id,
+        quantity: item.quantity,
+        price: item.price
+      }));
+
+      const orderData = {
+        items: orderItems,
+        deliveryAddress,
+        contact,
+        finalPrice: totalPrice
+      };
+
+      await axios.post('http://localhost:8080/order/place-order', orderData);
       alert('Order submitted successfully!');
       setCart([]); // Clear the cart after successful submission
+      setDeliveryAddress(''); // Clear delivery address
+      setContact(''); // Clear contact details
     } catch (error) {
       console.error('Error submitting order:', error);
       alert('Failed to submit the order.');
@@ -175,7 +208,7 @@ const Order = () => {
           <div className='flex flex-col items-center'>
             {cart.map((item) => (
               <div key={item.id} className='w-full border-b py-2'>
-                <p>{item.name} - Rs. {item.price}</p>
+                <p>{item.name} - Rs. {item.price} x {item.quantity}</p>
                 <button 
                   className='text-red-500' 
                   onClick={() => removeFromCart(item.id)}
@@ -185,6 +218,22 @@ const Order = () => {
               </div>
             ))}
             <h3 className='text-xl font-bold mt-4'>Total Price: Rs. {totalPrice}</h3>
+            <div className='w-full px-4 bg-white text-left py-4'>
+              <input
+                type='text'
+                placeholder='Enter delivery address'
+                className='border p-2 w-full rounded-md focus:ring-2 focus:ring-[#d19831] outline-none mb-4'
+                value={deliveryAddress}
+                onChange={(e) => setDeliveryAddress(e.target.value)}
+              />
+              <input
+                type='text'
+                placeholder='Enter contact number'
+                className='border p-2 w-full rounded-md focus:ring-2 focus:ring-[#d19831] outline-none'
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+              />
+            </div>
             <button 
               className='bg-[#000000] w-[300px] rounded-md font-medium my-6 px-6 mx-auto py-3 text-white'
               onClick={submitOrder}
@@ -203,3 +252,7 @@ const Order = () => {
 };
 
 export default Order;
+
+
+
+//UserId should be sent from here with the post request
