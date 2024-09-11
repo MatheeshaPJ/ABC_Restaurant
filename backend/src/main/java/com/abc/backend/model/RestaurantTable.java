@@ -22,8 +22,7 @@ public class RestaurantTable {
     private Long seatCount;
 
     @Column(nullable = false)
-    private String location; // e.g., MATARA
+    private String location; // For example, currently, MATARA
 
-    //Getters & Setters
 
 }
