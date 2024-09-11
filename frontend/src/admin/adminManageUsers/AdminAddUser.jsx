@@ -116,6 +116,7 @@ const AdminAddUser = () => {
                 value={role}
                 onChange={(e) => onInputChange(e)}
               >
+                <option className='text-gray-400'>Select User-Role</option>
                <option  value="ROLE_CUSTOMER">Customer</option>
                 <option value="ROLE_ADMIN">Staff</option>
                 <option value="ROLE_STAFF">Admin</option>
