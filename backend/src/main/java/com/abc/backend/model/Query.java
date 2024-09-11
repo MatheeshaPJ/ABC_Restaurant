@@ -1,7 +1,11 @@
 package com.abc.backend.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 public class Query {
 
@@ -16,41 +20,8 @@ public class Query {
     private Boolean isResolved;
 
     @ManyToOne
-    @JoinColumn(name = "customreId", nullable = false)
-    private User fk_query_user;
-
-    //Getters & Setters
+    @JoinColumn(name = "customerId", nullable = false)
+    private User user;
 
 
-    public Long getQueryId() {
-        return QueryId;
-    }
-
-    public void setQueryId(Long queryId) {
-        QueryId = queryId;
-    }
-
-    public String getQueryMessage() {
-        return queryMessage;
-    }
-
-    public void setQueryMessage(String queryMessage) {
-        this.queryMessage = queryMessage;
-    }
-
-    public Boolean getResolved() {
-        return isResolved;
-    }
-
-    public void setResolved(Boolean resolved) {
-        isResolved = resolved;
-    }
-
-    public User getFk_query_user() {
-        return fk_query_user;
-    }
-
-    public void setFk_query_user(User fk_query_user) {
-        this.fk_query_user = fk_query_user;
-    }
 }
